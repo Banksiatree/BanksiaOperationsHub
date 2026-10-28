@@ -3,405 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Banksia Tree — Ops Hub</title>
+<title>Banksia Tree - Ops Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --cream: #f5f0e8;
-    --bark: #3b2f1e;
-    --moss: #4a5e3a;
-    --sage: #7a9468;
-    --sand: #c9b89a;
-    --warm-white: #faf7f2;
-    --gold: #b8923a;
-  }
-
-  body {
-    background: var(--cream);
-    font-family: 'DM Sans', sans-serif;
-    color: var(--bark);
-    min-height: 100vh;
-    padding: 0;
-  }
-
-  /* Background texture */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b8923a' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-  }
-
+  :root { --cream: #f5f0e8; --bark: #3b2f1e; --moss: #4a5e3a; --sage: #7a9468; --sand: #c9b89a; --warm-white: #faf7f2; --gold: #b8923a; }
+  body { background: var(--cream); font-family: 'DM Sans', sans-serif; color: var(--bark); min-height: 100vh; padding: 0; }
   .page { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
-
-  /* Header */
   header { text-align: center; margin-bottom: 56px; }
-  .logo-mark {
-    width: 56px; height: 56px;
-    background: var(--moss);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 20px;
-    font-size: 26px;
-  }
-  header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.2rem;
-    font-weight: 600;
-    color: var(--bark);
-    letter-spacing: -0.5px;
-    line-height: 1.1;
-  }
-  header p {
-    margin-top: 8px;
-    color: var(--sage);
-    font-size: 0.9rem;
-    font-weight: 400;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-  .divider {
-    width: 40px; height: 2px;
-    background: var(--sand);
-    margin: 20px auto 0;
-    border-radius: 2px;
-  }
-
-  /* System sections */
+  .logo-mark { width: 56px; height: 56px; background: var(--moss); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 26px; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 600; color: var(--bark); letter-spacing: -0.5px; line-height: 1.1; }
+  header p { margin-top: 8px; color: var(--sage); font-size: 0.9rem; font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; }
+  .divider { width: 40px; height: 2px; background: var(--sand); margin: 20px auto 0; border-radius: 2px; }
   .system { margin-bottom: 44px; }
-
-  .system-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 1.5px solid var(--sand);
-  }
-  .system-icon {
-    width: 36px; height: 36px;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-    flex-shrink: 0;
-  }
+  .system-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1.5px solid var(--sand); }
+  .system-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
   .pos .system-icon { background: #e8ede3; }
   .res .system-icon { background: #ede8df; }
-
-  .system-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--bark);
-  }
-  .system-subtitle {
-    font-size: 0.78rem;
-    color: #8a7a68;
-    font-weight: 400;
-    margin-top: 1px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  /* Cards grid */
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 12px;
-  }
-
-  .card {
-    background: var(--warm-white);
-    border: 1.5px solid #e2d9cc;
-    border-radius: 12px;
-    padding: 16px 18px;
-    cursor: pointer;
-    transition: all 0.18s ease;
-    position: relative;
-    overflow: hidden;
-    text-decoration: none;
-    display: block;
-  }
-  .card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: var(--moss);
-    opacity: 0;
-    transition: opacity 0.18s ease;
-  }
-  .card:hover {
-    border-color: var(--sage);
-    box-shadow: 0 4px 16px rgba(59,47,30,0.08);
-    transform: translateY(-1px);
-  }
+  .system-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 600; color: var(--bark); }
+  .system-subtitle { font-size: 0.78rem; color: #8a7a68; font-weight: 400; margin-top: 1px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+  .card { background: var(--warm-white); border: 1.5px solid #e2d9cc; border-radius: 12px; padding: 16px 18px; cursor: pointer; transition: all 0.18s ease; position: relative; overflow: hidden; text-decoration: none; display: block; }
+  .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--moss); opacity: 0; transition: opacity 0.18s ease; }
+  .card:hover { border-color: var(--sage); box-shadow: 0 4px 16px rgba(59,47,30,0.08); transform: translateY(-1px); }
   .card:hover::before { opacity: 1; }
-
-  .card-label {
-    font-size: 0.7rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--sage);
-    margin-bottom: 4px;
-  }
-  .card-title {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--bark);
-    line-height: 1.35;
-    margin-bottom: 8px;
-  }
-  .card-url {
-    font-size: 0.72rem;
-    color: #a0907c;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .card-url::before {
-    content: '↗';
-    font-size: 0.8em;
-    color: var(--sage);
-  }
-
-  .card.empty {
-    border-style: dashed;
-    border-color: #d5cabb;
-    background: transparent;
-    cursor: default;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 80px;
-  }
+  .card-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); margin-bottom: 4px; }
+  .card-title { font-size: 0.95rem; font-weight: 500; color: var(--bark); line-height: 1.35; margin-bottom: 8px; }
+  .card-url { font-size: 0.72rem; color: #a0907c; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 4px; }
+  .card-url::before { content: 'open'; font-size: 0.8em; color: var(--sage); }
+  .card.empty { border-style: dashed; border-color: #d5cabb; background: transparent; cursor: default; display: flex; align-items: center; justify-content: center; min-height: 80px; }
   .card.empty:hover { transform: none; box-shadow: none; border-color: #d5cabb; }
   .card.empty span { color: #b0a090; font-size: 0.82rem; }
-
-  /* Add link button */
-  .add-btn {
-    margin-top: 10px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: none;
-    border: 1.5px dashed var(--sand);
-    border-radius: 8px;
-    padding: 8px 14px;
-    font-size: 0.82rem;
-    color: #8a7a68;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.15s;
-  }
+  .add-btn { margin-top: 10px; display: inline-flex; align-items: center; gap: 6px; background: none; border: 1.5px dashed var(--sand); border-radius: 8px; padding: 8px 14px; font-size: 0.82rem; color: #8a7a68; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
   .add-btn:hover { border-color: var(--sage); color: var(--moss); }
-
-  /* Modal */
-  .modal-bg {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(30,22,12,0.45);
-    z-index: 100;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(3px);
-  }
+  .modal-bg { display: none; position: fixed; inset: 0; background: rgba(30,22,12,0.45); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(3px); }
   .modal-bg.open { display: flex; }
-  .modal {
-    background: var(--warm-white);
-    border-radius: 16px;
-    padding: 32px;
-    width: 100%;
-    max-width: 420px;
-    box-shadow: 0 20px 60px rgba(30,22,12,0.25);
-    position: relative;
-    animation: slideUp 0.2s ease;
-  }
-  @keyframes slideUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
-  .modal h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-    color: var(--bark);
-  }
-  .modal label {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: #7a6a58;
-    margin-bottom: 5px;
-    margin-top: 14px;
-  }
-  .modal input, .modal select {
-    width: 100%;
-    padding: 9px 12px;
-    border: 1.5px solid #ddd0be;
-    border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    color: var(--bark);
-    background: white;
-    outline: none;
-    transition: border-color 0.15s;
-  }
+  .modal { background: var(--warm-white); border-radius: 16px; padding: 32px; width: 100%; max-width: 420px; box-shadow: 0 20px 60px rgba(30,22,12,0.25); position: relative; }
+  .modal h2 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 20px; color: var(--bark); }
+  .modal label { display: block; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: #7a6a58; margin-bottom: 5px; margin-top: 14px; }
+  .modal input, .modal select { width: 100%; padding: 9px 12px; border: 1.5px solid #ddd0be; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--bark); background: white; outline: none; transition: border-color 0.15s; }
   .modal input:focus, .modal select:focus { border-color: var(--sage); }
   .modal-actions { display: flex; gap: 10px; margin-top: 22px; }
-  .btn-primary {
-    flex: 1;
-    background: var(--moss);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  .btn-primary:hover { background: #3a4d2b; }
-  .btn-cancel {
-    flex: 1;
-    background: none;
-    border: 1.5px solid #ddd0be;
-    border-radius: 8px;
-    padding: 10px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.88rem;
-    color: #8a7a68;
-    cursor: pointer;
-    transition: border-color 0.15s;
-  }
-  .btn-cancel:hover { border-color: var(--sand); }
-
-  .close-modal {
-    position: absolute; top: 16px; right: 18px;
-    background: none; border: none; cursor: pointer;
-    font-size: 1.2rem; color: #a0907c; line-height: 1;
-  }
-
-  /* Edit mode */
+  .btn-primary { flex: 1; background: var(--moss); color: white; border: none; border-radius: 8px; padding: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500; cursor: pointer; }
+  .btn-cancel { flex: 1; background: none; border: 1.5px solid #ddd0be; border-radius: 8px; padding: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: #8a7a68; cursor: pointer; }
+  .close-modal { position: absolute; top: 16px; right: 18px; background: none; border: none; cursor: pointer; font-size: 1.2rem; color: #a0907c; line-height: 1; }
   .card.editable { cursor: default; }
   .card.editable:hover { transform: none; box-shadow: none; border-color: var(--sage); }
-  .delete-btn {
-    position: absolute; top: 8px; right: 8px;
-    background: #e8e0d5;
-    border: none; border-radius: 50%;
-    width: 22px; height: 22px;
-    font-size: 11px; cursor: pointer;
-    display: none;
-    align-items: center; justify-content: center;
-    color: #7a6a58;
-    line-height: 1;
-  }
-  .edit-btn {
-    position: absolute; top: 8px; right: 34px;
-    background: #e8ede3;
-    border: none; border-radius: 50%;
-    width: 22px; height: 22px;
-    font-size: 11px; cursor: pointer;
-    display: none;
-    align-items: center; justify-content: center;
-    color: var(--moss);
-    line-height: 1;
-  }
+  .delete-btn { position: absolute; top: 8px; right: 8px; background: #e8e0d5; border: none; border-radius: 50%; width: 22px; height: 22px; font-size: 11px; cursor: pointer; display: none; align-items: center; justify-content: center; color: #7a6a58; line-height: 1; }
+  .edit-btn { position: absolute; top: 8px; right: 34px; background: #e8ede3; border: none; border-radius: 50%; width: 22px; height: 22px; font-size: 11px; cursor: pointer; display: none; align-items: center; justify-content: center; color: var(--moss); line-height: 1; }
   .edit-mode .delete-btn { display: flex; }
   .edit-mode .edit-btn { display: flex; }
-  .edit-mode .card:hover { border-color: var(--sage); }
-
-  /* Internal Tools — launch cards */
-  .tool-launch-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 12px;
-  }
-  .tool-launch-card {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    background: var(--warm-white);
-    border: 1.5px solid #e2d9cc;
-    border-radius: 12px;
-    padding: 18px 16px;
-    text-decoration: none;
-    color: var(--bark);
-    transition: all 0.18s ease;
-    position: relative;
-  }
-  .tool-launch-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: var(--gold);
-    border-radius: 3px 0 0 3px;
-    opacity: 0;
-    transition: opacity 0.18s;
-  }
-  .tool-launch-card:hover {
-    border-color: var(--gold);
-    box-shadow: 0 4px 16px rgba(59,47,30,0.08);
-    transform: translateY(-1px);
-  }
+  .tool-launch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+  .tool-launch-card { display: flex; align-items: center; gap: 14px; background: var(--warm-white); border: 1.5px solid #e2d9cc; border-radius: 12px; padding: 18px 16px; text-decoration: none; color: var(--bark); transition: all 0.18s ease; position: relative; }
+  .tool-launch-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--gold); border-radius: 3px 0 0 3px; opacity: 0; transition: opacity 0.18s; }
+  .tool-launch-card:hover { border-color: var(--gold); box-shadow: 0 4px 16px rgba(59,47,30,0.08); transform: translateY(-1px); }
   .tool-launch-card:hover::before { opacity: 1; }
-  .tool-launch-icon {
-    font-size: 1.6rem;
-    flex-shrink: 0;
-    width: 44px; height: 44px;
-    background: #f0ebe0;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-  }
+  .tool-launch-icon { font-size: 1.6rem; flex-shrink: 0; width: 44px; height: 44px; background: #f0ebe0; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
   .tool-launch-body { flex: 1; min-width: 0; }
-  .tool-launch-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--bark);
-    margin-bottom: 3px;
-  }
-  .tool-launch-desc {
-    font-size: 0.75rem;
-    color: #8a7a68;
-    line-height: 1.35;
-  }
-  .tool-launch-arrow {
-    font-size: 1rem;
-    color: var(--sand);
-    flex-shrink: 0;
-    transition: color 0.15s;
-  }
+  .tool-launch-title { font-size: 0.95rem; font-weight: 600; color: var(--bark); margin-bottom: 3px; }
+  .tool-launch-desc { font-size: 0.75rem; color: #8a7a68; line-height: 1.35; }
+  .tool-launch-arrow { font-size: 1rem; color: var(--sand); flex-shrink: 0; transition: color 0.15s; }
   .tool-launch-card:hover .tool-launch-arrow { color: var(--gold); }
-
-  /* Footer */
   footer { text-align: center; margin-top: 60px; }
-  .edit-toggle {
-    background: none;
-    border: 1.5px solid var(--sand);
-    border-radius: 20px;
-    padding: 7px 18px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.8rem;
-    color: #8a7a68;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
+  .edit-toggle { background: none; border: 1.5px solid var(--sand); border-radius: 20px; padding: 7px 18px; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; color: #8a7a68; cursor: pointer; transition: all 0.15s; }
   .edit-toggle:hover { border-color: var(--sage); color: var(--moss); }
   .edit-toggle.active { background: var(--moss); color: white; border-color: var(--moss); }
 </style>
 </head>
 <body>
 <div class="page">
-
   <header>
     <div class="logo-mark">🌿</div>
     <h1>The Banksia Tree</h1>
@@ -411,13 +81,12 @@
 
   <div id="systems-container">
 
-    <!-- Internal Tools -->
     <div class="tools-section system">
       <div class="system-header">
         <div class="system-icon" style="background:#e3e8ed;">📊</div>
         <div>
           <div class="system-title">Internal Tools</div>
-          <div class="system-subtitle">Live dashboards &amp; calculators</div>
+          <div class="system-subtitle">Live dashboards and calculators</div>
         </div>
       </div>
       <div class="tool-launch-grid">
@@ -425,7 +94,7 @@
           <div class="tool-launch-icon">📈</div>
           <div class="tool-launch-body">
             <div class="tool-launch-title">Sales Tracker</div>
-            <div class="tool-launch-desc">Daily &amp; weekly sales tracking dashboard</div>
+            <div class="tool-launch-desc">Daily and weekly sales tracking dashboard</div>
           </div>
           <div class="tool-launch-arrow">↗</div>
         </a>
@@ -441,7 +110,7 @@
           <div class="tool-launch-icon">🧮</div>
           <div class="tool-launch-body">
             <div class="tool-launch-title">COGS Calculator</div>
-            <div class="tool-launch-desc">Cost of goods &amp; margin calculator</div>
+            <div class="tool-launch-desc">Cost of goods and margin calculator</div>
           </div>
           <div class="tool-launch-arrow">↗</div>
         </a>
@@ -449,12 +118,12 @@
           <div class="tool-launch-icon">👥</div>
           <div class="tool-launch-body">
             <div class="tool-launch-title">Connectteam</div>
-            <div class="tool-launch-desc">Team communication &amp; task management</div>
+            <div class="tool-launch-desc">Team communication and task management</div>
           </div>
           <div class="tool-launch-arrow">↗</div>
         </a>
         <a class="tool-launch-card" href="https://urhere.com.au/" target="_blank" rel="noopener">
-          <div class="tool-launch-icon">📅</div>
+          <div class="tool-launch-icon">🗓️</div>
           <div class="tool-launch-body">
             <div class="tool-launch-title">Roster System</div>
             <div class="tool-launch-desc">Staff rostering via UrHere</div>
@@ -465,20 +134,19 @@
           <div class="tool-launch-icon">💼</div>
           <div class="tool-launch-body">
             <div class="tool-launch-title">Xero</div>
-            <div class="tool-launch-desc">Catering quotes &amp; accounting</div>
+            <div class="tool-launch-desc">Catering quotes and accounting</div>
           </div>
           <div class="tool-launch-arrow">↗</div>
         </a>
       </div>
     </div>
 
-    <!-- Workbooks -->
     <div class="tools-section system">
       <div class="system-header">
         <div class="system-icon" style="background:#e3ede8;">📋</div>
         <div>
           <div class="system-title">Workbooks</div>
-          <div class="system-subtitle">Google Sheets — opens in a new tab</div>
+          <div class="system-subtitle">Google Sheets - opens in a new tab</div>
         </div>
       </div>
       <div class="tool-launch-grid">
@@ -486,62 +154,55 @@
           <div class="tool-launch-icon">🌿</div>
           <div class="tool-launch-body">
             <div class="tool-launch-title">FOH Workbook</div>
-            <div class="tool-launch-desc">Orders, par levels, prep lists, allergy guide &amp; more</div>
+            <div class="tool-launch-desc">Orders, par levels, prep lists, allergy guide and more</div>
           </div>
           <div class="tool-launch-arrow">↗</div>
         </a>
         <a class="tool-launch-card" href="https://docs.google.com/spreadsheets/d/18RQjTybTBFa_A1LlzzgWJ0hY_GnHndLF/edit" target="_blank" rel="noopener">
-          <div class="tool-launch-icon">📊</div>
+          <div class="tool-launch-icon">🍳</div>
           <div class="tool-launch-body">
             <div class="tool-launch-title">BOH Workbook</div>
-            <div class="tool-launch-desc">Kitchen-side sheets &amp; reference data</div>
+            <div class="tool-launch-desc">Kitchen-side sheets and reference data</div>
           </div>
           <div class="tool-launch-arrow">↗</div>
         </a>
       </div>
     </div>
 
-    <!-- POS -->
     <div class="system pos" data-system="pos">
       <div class="system-header">
         <div class="system-icon">🖥️</div>
         <div>
           <div class="system-title">Point of Sale</div>
-          <div class="system-subtitle">Training &amp; how-to resources</div>
+          <div class="system-subtitle">Training and how-to resources</div>
         </div>
       </div>
-      <div class="cards" id="cards-pos">
-        <!-- cards injected by JS -->
-      </div>
+      <div class="cards" id="cards-pos"></div>
       <button class="add-btn" onclick="openModal('pos')">+ Add link</button>
     </div>
 
-    <!-- Reservations -->
     <div class="system res" data-system="res">
       <div class="system-header">
         <div class="system-icon">📅</div>
         <div>
           <div class="system-title">Reservations</div>
-          <div class="system-subtitle">Training &amp; how-to resources</div>
+          <div class="system-subtitle">Training and how-to resources</div>
         </div>
       </div>
-      <div class="cards" id="cards-res">
-      </div>
+      <div class="cards" id="cards-res"></div>
       <button class="add-btn" onclick="openModal('res')">+ Add link</button>
     </div>
 
   </div>
 
   <footer>
-    <button class="edit-toggle" id="editToggle" onclick="toggleEditMode()">✏️ Edit mode</button>
+    <button class="edit-toggle" id="editToggle" onclick="toggleEditMode()">Edit mode</button>
   </footer>
-
 </div>
 
-<!-- Modal -->
 <div class="modal-bg" id="modalBg" onclick="closeModalOnBg(event)">
   <div class="modal">
-    <button class="close-modal" onclick="closeModal()">✕</button>
+    <button class="close-modal" onclick="closeModal()">X</button>
     <h2 id="modal-heading">Add a resource link</h2>
     <input type="hidden" id="modal-edit-id" value="">
     <label>System</label>
@@ -551,10 +212,10 @@
     </select>
     <label>Title</label>
     <input type="text" id="modal-title" placeholder="e.g. Processing a refund">
-    <label>Category / Label</label>
-    <input type="text" id="modal-label" placeholder="e.g. End of Day, Voids, Reporting…">
+    <label>Category</label>
+    <input type="text" id="modal-label" placeholder="e.g. End of Day, Voids, Reporting">
     <label>URL</label>
-    <input type="url" id="modal-url" placeholder="https://…">
+    <input type="url" id="modal-url" placeholder="https://...">
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Cancel</button>
       <button class="btn-primary" id="modal-save-btn" onclick="saveLink()">Save</button>
@@ -563,23 +224,23 @@
 </div>
 
 <script>
-// State
-const STORAGE_KEY = 'banksia_ops_links_v1';
-let editMode = false;
+var STORAGE_KEY = 'banksia_ops_links_v1';
+var editMode = false;
+var targetSystem = 'pos';
 
-const defaultLinks = {
+var defaultLinks = {
   pos: [
-    { id: uid(), title: 'Getting started overview', label: 'Setup', url: 'https://example.com' },
-    { id: uid(), title: 'Processing a sale', label: 'Daily use', url: 'https://example.com' },
-    { id: uid(), title: 'Voids & refunds', label: 'Daily use', url: 'https://example.com' },
-    { id: uid(), title: 'End of day cash-up', label: 'End of Day', url: 'https://example.com' },
-    { id: uid(), title: 'Running reports', label: 'Reporting', url: 'https://example.com' },
+    { id: 'p1', title: 'Getting started overview', label: 'Setup', url: 'https://example.com' },
+    { id: 'p2', title: 'Processing a sale', label: 'Daily use', url: 'https://example.com' },
+    { id: 'p3', title: 'Voids and refunds', label: 'Daily use', url: 'https://example.com' },
+    { id: 'p4', title: 'End of day cash-up', label: 'End of Day', url: 'https://example.com' },
+    { id: 'p5', title: 'Running reports', label: 'Reporting', url: 'https://example.com' }
   ],
   res: [
-    { id: uid(), title: 'Setting up your first booking', label: 'Setup', url: 'https://example.com' },
-    { id: uid(), title: 'Managing walk-ins', label: 'Daily use', url: 'https://example.com' },
-    { id: uid(), title: 'Editing & cancelling bookings', label: 'Daily use', url: 'https://example.com' },
-    { id: uid(), title: 'Floor plan & table management', label: 'Configuration', url: 'https://example.com' },
+    { id: 'r1', title: 'Setting up your first booking', label: 'Setup', url: 'https://example.com' },
+    { id: 'r2', title: 'Managing walk-ins', label: 'Daily use', url: 'https://example.com' },
+    { id: 'r3', title: 'Editing and cancelling bookings', label: 'Daily use', url: 'https://example.com' },
+    { id: 'r4', title: 'Floor plan and table management', label: 'Configuration', url: 'https://example.com' }
   ]
 };
 
@@ -587,51 +248,45 @@ function uid() { return '_' + Math.random().toString(36).slice(2,9); }
 
 function load() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    var raw = localStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(defaultLinks));
-  } catch { return JSON.parse(JSON.stringify(defaultLinks)); }
+  } catch(e) { return JSON.parse(JSON.stringify(defaultLinks)); }
 }
 
 function save(data) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
-// Render
-function render() {
-  const data = load();
-  ['pos','res'].forEach(sys => {
-    const container = document.getElementById('cards-' + sys);
-    container.innerHTML = '';
-    const links = data[sys] || [];
-    if (links.length === 0) {
-      container.innerHTML = '<div class="card empty"><span>No links yet — add one below</span></div>';
-      return;
-    }
-    links.forEach(link => {
-      const isPlaceholder = link.url === 'https://example.com';
-      const card = document.createElement(isPlaceholder ? 'div' : 'a');
-      card.className = 'card' + (editMode ? ' editable' : '');
-      if (!isPlaceholder) { card.href = link.url; card.target = '_blank'; card.rel = 'noopener'; }
-
-      const displayUrl = link.url.replace(/^https?:\/\//, '').replace(/\/$/, '');
-      card.innerHTML = `
-        <button class="edit-btn" onclick="openEditModal(event,'${sys}','${link.id}')">✎</button>
-        <button class="delete-btn" onclick="deleteLink(event,'${sys}','${link.id}')">✕</button>
-        <div class="card-label">${esc(link.label)}</div>
-        <div class="card-title">${esc(link.title)}</div>
-        <div class="card-url">${esc(isPlaceholder ? 'Click ✎ to add URL' : displayUrl)}</div>
-      `;
-      container.appendChild(card);
-    });
-  });
-}
-
 function esc(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// Modal
-let targetSystem = 'pos';
+function render() {
+  var data = load();
+  ['pos','res'].forEach(function(sys) {
+    var container = document.getElementById('cards-' + sys);
+    container.innerHTML = '';
+    var links = data[sys] || [];
+    if (links.length === 0) {
+      container.innerHTML = '<div class="card empty"><span>No links yet - add one below</span></div>';
+      return;
+    }
+    links.forEach(function(link) {
+      var isPlaceholder = link.url === 'https://example.com';
+      var card = document.createElement(isPlaceholder ? 'div' : 'a');
+      card.className = 'card' + (editMode ? ' editable' : '');
+      if (!isPlaceholder) { card.href = link.url; card.target = '_blank'; card.rel = 'noopener'; }
+      var displayUrl = link.url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+      card.innerHTML =
+        '<button class="edit-btn" onclick="openEditModal(event,\'' + sys + '\',\'' + link.id + '\')">edit</button>' +
+        '<button class="delete-btn" onclick="deleteLink(event,\'' + sys + '\',\'' + link.id + '\')">del</button>' +
+        '<div class="card-label">' + esc(link.label) + '</div>' +
+        '<div class="card-title">' + esc(link.title) + '</div>' +
+        '<div class="card-url">' + esc(isPlaceholder ? 'Click edit to add URL' : displayUrl) + '</div>';
+      container.appendChild(card);
+    });
+  });
+}
 
 function openModal(sys) {
   targetSystem = sys;
@@ -644,13 +299,13 @@ function openModal(sys) {
   document.getElementById('modal-label').value = '';
   document.getElementById('modal-url').value = '';
   document.getElementById('modalBg').classList.add('open');
-  setTimeout(() => document.getElementById('modal-title').focus(), 50);
+  setTimeout(function(){ document.getElementById('modal-title').focus(); }, 50);
 }
 
 function openEditModal(e, sys, id) {
   e.preventDefault(); e.stopPropagation();
-  const data = load();
-  const link = (data[sys] || []).find(l => l.id === id);
+  var data = load();
+  var link = (data[sys] || []).filter(function(l){ return l.id === id; })[0];
   if (!link) return;
   document.getElementById('modal-heading').textContent = 'Edit resource link';
   document.getElementById('modal-save-btn').textContent = 'Update';
@@ -661,30 +316,36 @@ function openEditModal(e, sys, id) {
   document.getElementById('modal-label').value = link.label;
   document.getElementById('modal-url').value = link.url === 'https://example.com' ? '' : link.url;
   document.getElementById('modalBg').classList.add('open');
-  setTimeout(() => document.getElementById('modal-url').focus(), 50);
+  setTimeout(function(){ document.getElementById('modal-url').focus(); }, 50);
 }
 
 function closeModal() {
   document.getElementById('modalBg').classList.remove('open');
   document.getElementById('modal-system').disabled = false;
 }
-function closeModalOnBg(e) { if (e.target === document.getElementById('modalBg')) closeModal(); }
+
+function closeModalOnBg(e) {
+  if (e.target === document.getElementById('modalBg')) closeModal();
+}
 
 function saveLink() {
-  const sys = document.getElementById('modal-system').value;
-  const title = document.getElementById('modal-title').value.trim();
-  const label = document.getElementById('modal-label').value.trim();
-  const url = document.getElementById('modal-url').value.trim();
-  const editId = document.getElementById('modal-edit-id').value;
+  var sys = document.getElementById('modal-system').value;
+  var title = document.getElementById('modal-title').value.trim();
+  var label = document.getElementById('modal-label').value.trim();
+  var url = document.getElementById('modal-url').value.trim();
+  var editId = document.getElementById('modal-edit-id').value;
   if (!title || !url) { alert('Title and URL are required.'); return; }
-  const data = load();
+  var data = load();
   if (!data[sys]) data[sys] = [];
   if (editId) {
-    // Update existing
-    const idx = data[sys].findIndex(l => l.id === editId);
-    if (idx > -1) data[sys][idx] = { id: editId, title, label: label || 'General', url };
+    for (var i = 0; i < data[sys].length; i++) {
+      if (data[sys][i].id === editId) {
+        data[sys][i] = { id: editId, title: title, label: label || 'General', url: url };
+        break;
+      }
+    }
   } else {
-    data[sys].push({ id: uid(), title, label: label || 'General', url });
+    data[sys].push({ id: uid(), title: title, label: label || 'General', url: url });
   }
   save(data);
   closeModal();
@@ -693,24 +354,22 @@ function saveLink() {
 
 function deleteLink(e, sys, id) {
   e.preventDefault(); e.stopPropagation();
-  const data = load();
-  data[sys] = (data[sys] || []).filter(l => l.id !== id);
+  var data = load();
+  data[sys] = (data[sys] || []).filter(function(l){ return l.id !== id; });
   save(data);
   render();
 }
 
-// Edit mode
 function toggleEditMode() {
   editMode = !editMode;
-  const btn = document.getElementById('editToggle');
-  const container = document.getElementById('systems-container');
+  var btn = document.getElementById('editToggle');
+  var container = document.getElementById('systems-container');
   btn.classList.toggle('active', editMode);
-  btn.textContent = editMode ? '✓ Done' : '✏️ Edit mode';
+  btn.textContent = editMode ? 'Done' : 'Edit mode';
   container.classList.toggle('edit-mode', editMode);
   render();
 }
 
-// Init
 render();
 </script>
 </body>

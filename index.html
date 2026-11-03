@@ -138,6 +138,14 @@
           </div>
           <div class="tool-launch-arrow">↗</div>
         </a>
+        <a class="tool-launch-card" href="https://banksia-visibility.vercel.app/" target="_blank" rel="noopener">
+          <div class="tool-launch-icon">⭐</div>
+          <div class="tool-launch-body">
+            <div class="tool-launch-title">Visibility</div>
+            <div class="tool-launch-desc">Google review replies and maps ranking<br><strong>Not for staff use</strong></div>
+          </div>
+          <div class="tool-launch-arrow">↗</div>
+        </a>
       </div>
     </div>
 
@@ -169,208 +177,8 @@
       </div>
     </div>
 
-    <div class="system pos" data-system="pos">
+    <div class="tools-section system">
       <div class="system-header">
-        <div class="system-icon">🖥️</div>
+        <div class="system-icon" style="background:#ede8df;">💵</div>
         <div>
-          <div class="system-title">Point of Sale</div>
-          <div class="system-subtitle">Training and how-to resources</div>
-        </div>
-      </div>
-      <div class="cards" id="cards-pos"></div>
-      <button class="add-btn" onclick="openModal('pos')">+ Add link</button>
-    </div>
-
-    <div class="system res" data-system="res">
-      <div class="system-header">
-        <div class="system-icon">📅</div>
-        <div>
-          <div class="system-title">Reservations</div>
-          <div class="system-subtitle">Training and how-to resources</div>
-        </div>
-      </div>
-      <div class="cards" id="cards-res"></div>
-      <button class="add-btn" onclick="openModal('res')">+ Add link</button>
-    </div>
-
-  </div>
-
-  <footer>
-    <button class="edit-toggle" id="editToggle" onclick="toggleEditMode()">Edit mode</button>
-  </footer>
-</div>
-
-<div class="modal-bg" id="modalBg" onclick="closeModalOnBg(event)">
-  <div class="modal">
-    <button class="close-modal" onclick="closeModal()">X</button>
-    <h2 id="modal-heading">Add a resource link</h2>
-    <input type="hidden" id="modal-edit-id" value="">
-    <label>System</label>
-    <select id="modal-system">
-      <option value="pos">Point of Sale</option>
-      <option value="res">Reservations</option>
-    </select>
-    <label>Title</label>
-    <input type="text" id="modal-title" placeholder="e.g. Processing a refund">
-    <label>Category</label>
-    <input type="text" id="modal-label" placeholder="e.g. End of Day, Voids, Reporting">
-    <label>URL</label>
-    <input type="url" id="modal-url" placeholder="https://...">
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      <button class="btn-primary" id="modal-save-btn" onclick="saveLink()">Save</button>
-    </div>
-  </div>
-</div>
-
-<script>
-var STORAGE_KEY = 'banksia_ops_links_v1';
-var editMode = false;
-var targetSystem = 'pos';
-
-var defaultLinks = {
-  pos: [
-    { id: 'p1', title: 'Getting started overview', label: 'Setup', url: 'https://example.com' },
-    { id: 'p2', title: 'Processing a sale', label: 'Daily use', url: 'https://example.com' },
-    { id: 'p3', title: 'Voids and refunds', label: 'Daily use', url: 'https://example.com' },
-    { id: 'p4', title: 'End of day cash-up', label: 'End of Day', url: 'https://example.com' },
-    { id: 'p5', title: 'Running reports', label: 'Reporting', url: 'https://example.com' }
-  ],
-  res: [
-    { id: 'r1', title: 'Setting up your first booking', label: 'Setup', url: 'https://example.com' },
-    { id: 'r2', title: 'Managing walk-ins', label: 'Daily use', url: 'https://example.com' },
-    { id: 'r3', title: 'Editing and cancelling bookings', label: 'Daily use', url: 'https://example.com' },
-    { id: 'r4', title: 'Floor plan and table management', label: 'Configuration', url: 'https://example.com' }
-  ]
-};
-
-function uid() { return '_' + Math.random().toString(36).slice(2,9); }
-
-function load() {
-  try {
-    var raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(defaultLinks));
-  } catch(e) { return JSON.parse(JSON.stringify(defaultLinks)); }
-}
-
-function save(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
-
-function esc(str) {
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function render() {
-  var data = load();
-  ['pos','res'].forEach(function(sys) {
-    var container = document.getElementById('cards-' + sys);
-    container.innerHTML = '';
-    var links = data[sys] || [];
-    if (links.length === 0) {
-      container.innerHTML = '<div class="card empty"><span>No links yet - add one below</span></div>';
-      return;
-    }
-    links.forEach(function(link) {
-      var isPlaceholder = link.url === 'https://example.com';
-      var card = document.createElement(isPlaceholder ? 'div' : 'a');
-      card.className = 'card' + (editMode ? ' editable' : '');
-      if (!isPlaceholder) { card.href = link.url; card.target = '_blank'; card.rel = 'noopener'; }
-      var displayUrl = link.url.replace(/^https?:\/\//, '').replace(/\/$/, '');
-      card.innerHTML =
-        '<button class="edit-btn" onclick="openEditModal(event,\'' + sys + '\',\'' + link.id + '\')">edit</button>' +
-        '<button class="delete-btn" onclick="deleteLink(event,\'' + sys + '\',\'' + link.id + '\')">del</button>' +
-        '<div class="card-label">' + esc(link.label) + '</div>' +
-        '<div class="card-title">' + esc(link.title) + '</div>' +
-        '<div class="card-url">' + esc(isPlaceholder ? 'Click edit to add URL' : displayUrl) + '</div>';
-      container.appendChild(card);
-    });
-  });
-}
-
-function openModal(sys) {
-  targetSystem = sys;
-  document.getElementById('modal-heading').textContent = 'Add a resource link';
-  document.getElementById('modal-save-btn').textContent = 'Save';
-  document.getElementById('modal-edit-id').value = '';
-  document.getElementById('modal-system').value = sys;
-  document.getElementById('modal-system').disabled = false;
-  document.getElementById('modal-title').value = '';
-  document.getElementById('modal-label').value = '';
-  document.getElementById('modal-url').value = '';
-  document.getElementById('modalBg').classList.add('open');
-  setTimeout(function(){ document.getElementById('modal-title').focus(); }, 50);
-}
-
-function openEditModal(e, sys, id) {
-  e.preventDefault(); e.stopPropagation();
-  var data = load();
-  var link = (data[sys] || []).filter(function(l){ return l.id === id; })[0];
-  if (!link) return;
-  document.getElementById('modal-heading').textContent = 'Edit resource link';
-  document.getElementById('modal-save-btn').textContent = 'Update';
-  document.getElementById('modal-edit-id').value = id;
-  document.getElementById('modal-system').value = sys;
-  document.getElementById('modal-system').disabled = true;
-  document.getElementById('modal-title').value = link.title;
-  document.getElementById('modal-label').value = link.label;
-  document.getElementById('modal-url').value = link.url === 'https://example.com' ? '' : link.url;
-  document.getElementById('modalBg').classList.add('open');
-  setTimeout(function(){ document.getElementById('modal-url').focus(); }, 50);
-}
-
-function closeModal() {
-  document.getElementById('modalBg').classList.remove('open');
-  document.getElementById('modal-system').disabled = false;
-}
-
-function closeModalOnBg(e) {
-  if (e.target === document.getElementById('modalBg')) closeModal();
-}
-
-function saveLink() {
-  var sys = document.getElementById('modal-system').value;
-  var title = document.getElementById('modal-title').value.trim();
-  var label = document.getElementById('modal-label').value.trim();
-  var url = document.getElementById('modal-url').value.trim();
-  var editId = document.getElementById('modal-edit-id').value;
-  if (!title || !url) { alert('Title and URL are required.'); return; }
-  var data = load();
-  if (!data[sys]) data[sys] = [];
-  if (editId) {
-    for (var i = 0; i < data[sys].length; i++) {
-      if (data[sys][i].id === editId) {
-        data[sys][i] = { id: editId, title: title, label: label || 'General', url: url };
-        break;
-      }
-    }
-  } else {
-    data[sys].push({ id: uid(), title: title, label: label || 'General', url: url });
-  }
-  save(data);
-  closeModal();
-  render();
-}
-
-function deleteLink(e, sys, id) {
-  e.preventDefault(); e.stopPropagation();
-  var data = load();
-  data[sys] = (data[sys] || []).filter(function(l){ return l.id !== id; });
-  save(data);
-  render();
-}
-
-function toggleEditMode() {
-  editMode = !editMode;
-  var btn = document.getElementById('editToggle');
-  var container = document.getElementById('systems-container');
-  btn.classList.toggle('active', editMode);
-  btn.textContent = editMode ? 'Done' : 'Edit mode';
-  container.classList.toggle('edit-mode', editMode);
-  render();
-}
-
-render();
-</script>
-</body>
-</html>
+          <div class="system-title">Pay and Awards</div>
